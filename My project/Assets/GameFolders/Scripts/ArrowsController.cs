@@ -19,8 +19,7 @@ public class ArrowsController : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space)){
-            var newArrow = Instantiate(_arrowPrefab,this.transform);
-            arrows.Add(newArrow);
+            
             CreateCircle();
         }
     }
@@ -37,5 +36,9 @@ public class ArrowsController : MonoBehaviour
         pos.x = Mathf.Cos(degree * Mathf.Deg2Rad);
         pos.y = Mathf.Sin(degree * Mathf.Deg2Rad);
         arrow.transform.localPosition = pos * mesafe;
+    }
+    public void CreateArrow(){
+        var newArrow = Instantiate(_arrowPrefab, this.transform);
+        arrows.Add(newArrow);
     }
 }
