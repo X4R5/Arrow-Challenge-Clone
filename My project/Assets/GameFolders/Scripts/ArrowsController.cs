@@ -5,8 +5,9 @@ using UnityEngine;
 public class ArrowsController : MonoBehaviour
 {
     public List<GameObject> arrows = new List<GameObject>();
+    [SerializeField] Camera _camera;
     [SerializeField] GameObject _arrowPrefab;
-    public float mesafe;
+    public float mesafe, _moveSpeed;
     public static ArrowsController Instance;
     // Start is called before the first frame update
     void Start()
@@ -18,9 +19,9 @@ public class ArrowsController : MonoBehaviour
     
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            
-            CreateCircle();
+        CameraFollow.Instance.MoveCamera();
+        if(Input.GetMouseButton(0)){
+            transform.position = Vector3.Lerp(transform.position, new Vector3(MouseInput().x, transform.position.y, transform.position.z), _moveSpeed * Time.deltaTime);
         }
     }
     
@@ -40,5 +41,14 @@ public class ArrowsController : MonoBehaviour
     public void CreateArrow(){
         var newArrow = Instantiate(_arrowPrefab, this.transform);
         arrows.Add(newArrow);
+    }
+    public Vector3 MouseInput(){
+        float x = 0;
+        var ray = _camera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            x = hit.point.x;
+        }
+        return new Vector3(x,0,0);
     }
 }
