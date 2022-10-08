@@ -42,6 +42,12 @@ public class ArrowsController : MonoBehaviour
         var newArrow = Instantiate(_arrowPrefab, this.transform);
         arrows.Add(newArrow);
     }
+    public void RemoveArrow(){
+        var arrowToRemove = ArrowsController.Instance.arrows[0];
+        arrows.RemoveAt(0);
+        CreateCircle();
+        Destroy(arrowToRemove);
+    }
     public Vector3 MouseInput(){
         float x = 0;
         var ray = _camera.ScreenPointToRay(Input.mousePosition);

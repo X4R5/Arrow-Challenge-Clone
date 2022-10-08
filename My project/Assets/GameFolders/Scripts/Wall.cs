@@ -13,10 +13,7 @@ public class Wall : MonoBehaviour
         if(_amountToAddOrRemove < 0){
             for (int i = 0; i < _amountToAddOrRemove * -1; i++)
             {
-                var arrowToRemove = ArrowsController.Instance.arrows[0];
-                ArrowsController.Instance.arrows.RemoveAt(0);
-                ArrowsController.Instance.CreateCircle();
-                Destroy(arrowToRemove);
+                ArrowsController.Instance.RemoveArrow();
                 Destroy(this.gameObject);
             }
         }else{
