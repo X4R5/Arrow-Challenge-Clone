@@ -10,9 +10,13 @@ public class ArrowsController : MonoBehaviour
     [SerializeField] GameObject _arrowPrefab;
     [SerializeField] TMP_Text _arrowCountText;
     [SerializeField] int _startArrowCount;
-    public float mesafe, _moveSpeed;
+    public int StartArrowCount => _startArrowCount;
+    [SerializeField] float mesafe, _moveSpeed;
     public static ArrowsController Instance;
     // Start is called before the first frame update
+    private void Awake() {
+        _arrowCountText.text = "";
+    }
     void Start()
     {
         CreateArrow(_startArrowCount);
@@ -50,6 +54,7 @@ public class ArrowsController : MonoBehaviour
     public void CreateArrow(){
         var newArrow = Instantiate(_arrowPrefab, this.transform);
         _arrows.Add(newArrow);
+        if(_arrows.Count % 10 == 0) mesafe += 0.1f;
         SetArrowCountText();
     }
     public void CreateArrow(int amount){
@@ -57,6 +62,7 @@ public class ArrowsController : MonoBehaviour
         {
             var newArrow = Instantiate(_arrowPrefab, this.transform);
             _arrows.Add(newArrow);
+            if(_arrows.Count % 10 == 0) mesafe += 0.1f;
         }
         SetArrowCountText();
     }
@@ -65,6 +71,7 @@ public class ArrowsController : MonoBehaviour
         _arrows.RemoveAt(0);
         CreateCircle();
         Destroy(arrowToRemove);
+        if(_arrows.Count % 10 == 0) mesafe -= 0.1f;
         SetArrowCountText();
     }
     public void RemoveArrow(int amount){
@@ -77,8 +84,9 @@ public class ArrowsController : MonoBehaviour
             _arrows.RemoveAt(0);
             CreateCircle();
             Destroy(arrowToRemove);
-            SetArrowCountText();
+            if(_arrows.Count % 10 == 0) mesafe -= 0.1f;
         }
+        SetArrowCountText();
     }
     public Vector3 MouseInput(){
         float x = 0;

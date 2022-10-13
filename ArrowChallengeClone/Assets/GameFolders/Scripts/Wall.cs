@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Wall : MonoBehaviour
 {
-    [SerializeField] int _amountToAddOrRemove;
+    int _amountToAddOrRemove = 0;
+    public int WallWalue { get{return _amountToAddOrRemove;} private set{_amountToAddOrRemove = value;} }
     [SerializeField] TMP_Text _valueText;
-    [SerializeField] Material _green, _red;
-    private void Start() {
+    [SerializeField] Image _image;
+    private void Awake() {
         _amountToAddOrRemove = Random.Range(-10, 11);
+        while(_amountToAddOrRemove == 0){
+            _amountToAddOrRemove = Random.Range(-10, 11);
+        }
+    }
+    private void Start() {
         SetValueText();
         SetWallColor();
     }
@@ -42,9 +49,15 @@ public class Wall : MonoBehaviour
     }
     void SetWallColor(){
         if(_amountToAddOrRemove > 0){
-            GetComponent<Renderer>().material = _green;
+            var img = _image.GetComponent<Image>();
+            var tempColor = Color.green;
+            tempColor.a = 0.275f;
+            img.color = tempColor;
         }else{
-            GetComponent<Renderer>().material = _red;
+            var img = _image.GetComponent<Image>();
+            var tempColor = Color.red;
+            tempColor.a = 0.275f;
+            img.color = tempColor;
         }
     }
 }
