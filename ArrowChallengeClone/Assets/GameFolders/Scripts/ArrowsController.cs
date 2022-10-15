@@ -28,7 +28,7 @@ public class ArrowsController : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButton(0)){
-            transform.position = Vector3.Lerp(transform.position, new Vector3(MouseInput().x, transform.position.y, transform.position.z), _moveSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(MobileInput.GetInput(_camera).x, transform.position.y, transform.position.z), _moveSpeed * Time.deltaTime);
         }
         if(_arrows.Count == 0){
             CreateArrow();
@@ -88,15 +88,15 @@ public class ArrowsController : MonoBehaviour
         }
         SetArrowCountText();
     }
-    public Vector3 MouseInput(){
-        float x = 0;
-        var ray = _camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
-            x = hit.point.x;
-        }
-        return new Vector3(x,0,0);
-    }
+    // public Vector3 MouseInput(){
+    //     float x = 0;
+    //     var ray = _camera.ScreenPointToRay(Input.mousePosition);
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(ray, out hit)) {
+    //         x = hit.point.x;
+    //     }
+    //     return new Vector3(x,0,0);
+    // }
     public void SetArrowCountText(){
         _arrowCountText.text = _arrows.Count.ToString();
     }
